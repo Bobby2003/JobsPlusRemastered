@@ -55,6 +55,12 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayer implements J
     @Override
     public Job jobsplus$addNewJob(JobInstance jobInstance) {
         if (jobInstance.getLocation() == null) return null;
+        
+        // 新增：数量限制检查
+        if (this.jobsplus$jobs.size() >= freeJobLimit) {
+            return null;  // 超过限制，拒绝添加
+        }
+        
         Job job = jobsplus$getJob(jobInstance);
         if (job == null) {
             job = new Job(this, jobInstance, 1, 0);
