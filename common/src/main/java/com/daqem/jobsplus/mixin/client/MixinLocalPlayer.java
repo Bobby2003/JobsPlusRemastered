@@ -3,6 +3,7 @@ package com.daqem.jobsplus.mixin.client;
 import com.daqem.arc.api.action.holder.IActionHolder;
 import com.daqem.arc.api.player.ArcPlayer;
 import com.daqem.jobsplus.client.player.JobsClientPlayer;
+import com.daqem.jobsplus.config.JobsPlusConfig;
 import com.daqem.jobsplus.integration.arc.holder.holders.job.JobInstance;
 import com.daqem.jobsplus.integration.arc.holder.holders.job.JobManager;
 import com.daqem.jobsplus.player.job.Job;
@@ -57,6 +58,7 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayer implements J
         if (jobInstance.getLocation() == null) return null;
         
         // 新增：数量限制检查
+        int freeJobLimit = JobsPlusConfig.amountOfFreeJobs.get();
         if (this.jobsplus$jobs.size() >= freeJobLimit) {
             return null;  // 超过限制，拒绝添加
         }
